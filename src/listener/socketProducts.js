@@ -1,14 +1,12 @@
-//import ProductManager from "../dao/managers/fsmanagers/ProductManager.js"
 import ProductManager from '../dao/managers/mongomanagers/mongoProductManager.js'
 import { __dirname } from "../utils.js"
 
-//const productManager = new ProductManager(__dirname + '/dao/managers/fsmanagers/data/products.json')
 const productManager = new ProductManager()
 
 const socketProducts = (socketServer) => {
     socketServer.on('connection', async (socket) => {
 
-        const sendUpdatedProductList = async (limit, page, sort, query) => {
+        const sendUpdatedProductList = async (limit=100, page, sort, query) => {
             const productList = await productManager.getProducts(limit, page, sort, query)
             socketServer.emit('sendProducts', productList.products)
         }

@@ -1,6 +1,7 @@
 <div class="container pt-5">
     <div class="buttons is-right">
         <b>Bienvenido {{user.first_name}}</b>
+        <a href="/chat" class="button is-small is-link">Chat</a>
         <a href="/profile" class="button is-small is-link">Mi cuenta</a>
         <form action="/api/sessions/logout" method="POST">
             <button type="submit" class="button is-small is-dark">Cerrar Sesión</button>
@@ -9,8 +10,7 @@
     <h1 class="title pb-3"><a href="/products">Lista de Productos</a></h1>
 
     <div class="buttons is-right">
-        <a href="/carts/{{user.cart}}" class="button is-small is-link"><i
-                class="fas fa-shopping-cart p-1"></i>Carrito
+        <a href="/carts/{{user.cart}}" class="button is-small is-link"><i class="fas fa-shopping-cart p-1"></i>Carrito
             ({{countProducts cart.products}})</a>
     </div>
 
@@ -58,8 +58,7 @@
                         <div class="level px-1 pt-2">
                             <div class="level-left">
                                 <p class="level-item has-text-left">
-                                    <a href="?query={{category}}"
-                                        class="tag is-link">{{category}}</a>
+                                    <a href="?query={{category}}" class="tag is-link">{{category}}</a>
                                 </p>
                             </div>
                             <div class="level-right">
@@ -80,8 +79,8 @@
                         <div style="position: absolute; bottom: 0; right: 0;">
                             <p class="buttons p-2">
                                 {{#if status}}
-                                <button class="button is-link is-rounded" data-cid="{{../user.cart}}"
-                                    data-pid="{{id}}" onclick="addToCart(this)">Añadir al carrito</button>
+                                <button class="button is-link is-rounded" data-cid="{{../user.cart}}" data-pid="{{id}}"
+                                    onclick="addToCart(this)">Añadir al carrito</button>
                                 {{else}}
                                 <button class="button is-link is-rounded" disabled>Añadir al carrito</button>
                                 {{/if}}

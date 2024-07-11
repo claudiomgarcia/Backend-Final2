@@ -51,14 +51,20 @@ export const renderProductsPage = async (req, res) => {
 
 export const renderRealTimeProductsPage = (req, res) => {
     try {
-        res.render('realTimeProducts', { title: "Productos en tiempo real" })
+        res.render('realTimeProducts', {
+            title: "Productos en tiempo real",
+            user: req.session.user,
+        })
     } catch (error) {
         res.status(500).json({ error: 'Hubo un error al obtener los productos.', message: error.message })
     }
 }
 
 export const renderChatPage = (req, res) => {
-    res.render('chat', { title: "Chat" })
+    res.render('chat', {
+        title: "Chat",
+        user: req.session.user
+    })
 }
 
 export const renderCartPage = async (req, res) => {

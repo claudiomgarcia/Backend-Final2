@@ -1,36 +1,24 @@
 <div class="container pt-5">
-<div>
-    <h1 class="title">Chat</h1>
-    <label class="label">Mensaje: </label>
-    <input class="input" type="text" id="chatBox">
-</div>
-<hr>
-<div class="box">
-    <p id="messageLogs"></p>
-</div>
+    <h1 class="title pb-3"><a href="/products">Inicio</a></h1>
+    <div>
+        <label class="label">Mensaje: </label>
+        <input class="input" type="text" id="chatBox">
+    </div>
+    <hr>
+    <div class="box">
+        <p id="messageLogs"></p>
+    </div>
 
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     const socket = io()
     let chatBox = document.getElementById("chatBox")
 
-    Swal.fire({
-        title: "Identificate",
-        input: "text",
-        text: "Ingresa tu Email",
-
-        inputValidator: (value) => {
-            return !value && "Necesitas identificarte para ingresar a la sala"
-        }
-
-    }).then(result => {
-        user = result.value
-    })
-
-    let user
+    let user = "{{user.first_name}}"
 
     chatBox.addEventListener("keyup", evt => {
         if (evt.key === "Enter") {

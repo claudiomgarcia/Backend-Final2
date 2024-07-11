@@ -13,3 +13,17 @@ export const isNotAuthenticated = (req, res, next) => {
         res.redirect('/products')
     }
 }
+
+export const checkRole = (roles) => {
+    return (req, res, next) => {
+        if (roles.includes(req.session.user.role)) {
+            return next()
+        } else {
+            if (req.session.user.role === "admin") {
+                res.redirect("/realtimeproducts")
+            } else {
+                res.send({ message: "No autorizado" });
+            }
+        }
+    };
+};

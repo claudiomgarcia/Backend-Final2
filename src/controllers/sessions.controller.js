@@ -62,9 +62,13 @@ export const logout = (req, res) => {
 
 export const getCurrentSession = (req, res) => {
     const session = req.session.user
+    
     if (!session) {
         return res.status(401).json({ error: 'Sesión no iniciada' })
-    } else {
-        return res.json(session)
     }
+
+    const { first_name, last_name, age } = session
+    const sessionInfo = { first_name, last_name, age }
+
+    return res.json(sessionInfo)
 }
