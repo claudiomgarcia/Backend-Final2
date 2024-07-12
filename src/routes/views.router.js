@@ -7,7 +7,8 @@ import {
     renderLoginPage,
     renderRegisterPage,
     renderProfilePage,
-    renderNotFoundPage
+    renderNotFoundPage,
+    renderCheckoutPage
 } from '../controllers/views.controller.js'
 import { isAuthenticated, isNotAuthenticated, checkRole } from '../middlewares/auth.js'
 
@@ -20,6 +21,7 @@ viewsRouter.get('/carts/:cid', isAuthenticated, renderCartPage)
 viewsRouter.get(['/', '/login'], isNotAuthenticated, renderLoginPage)
 viewsRouter.get('/register', isNotAuthenticated, renderRegisterPage)
 viewsRouter.get('/profile', isAuthenticated, renderProfilePage)
+viewsRouter.get('/:cid/purchase', isAuthenticated, renderCheckoutPage)
 viewsRouter.get('*', renderNotFoundPage)
 
 export default viewsRouter

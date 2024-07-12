@@ -7,7 +7,8 @@ import {
     deleteProduct,
     updateCart,
     updateProductQty,
-    clearCart
+    clearCart,
+    checkout
 } from '../controllers/carts.controller.js'
 
 const cartsRouter = Router()

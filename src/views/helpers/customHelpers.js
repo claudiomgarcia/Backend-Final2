@@ -26,5 +26,8 @@ export default {
             total += product.product.price * product.quantity
         })
         return total.toFixed(2)
+    },
+    hasOutOfStock: function(products) {
+        return products.some(product => !product.inStock)
     }
 }

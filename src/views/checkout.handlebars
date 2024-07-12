@@ -1,0 +1,34 @@
+<div class="container pt-5">
+    <h1 class="title pb-3"><a href="/products">Inicio</a></h1>
+
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Detalle de la compra - ({{cid}})</h1>
+            <table class="table is-fullwidth is-striped">
+
+                {{#if productsNoStock}}
+                {{#each productsNoStock}}
+                Los siguientes productos no tienen stock:
+                <p>{{this.title}} - Cantidad: {{this.quantity}}</p>
+                {{/each}}
+                {{/if}}
+
+                <div class="card" style="background-color: #0F1013">
+                    <div class="card-content mb-6" style="flex-grow: 1">
+                        <p class="title is-5 pb-5">Productos</p>
+                        {{#each cart.products}}
+                        <p class="subtitle is-6">{{this.product.title}} ({{this.quantity}}) - $ {{this.product.price}}
+                        </p>
+                        {{/each}}
+                        <p class="title is-6 pt-5">Total: $ {{cartTotal cart.products}}</p>
+                    </div>
+                    <div style="position: absolute; bottom: 0; right: 0;">
+                        <p class="buttons p-2">
+                        <form action="/carts/{{cid}}/purchase" method="post"><button
+                                class="button is-small is-link is-rounded">Finalizar Compra</button>
+                        </form>
+                        </p>
+                    </div>
+                </div>
+
+        </div>

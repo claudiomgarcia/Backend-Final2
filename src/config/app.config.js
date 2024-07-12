@@ -6,6 +6,7 @@ import MongoStore from 'connect-mongo'
 import { create } from 'express-handlebars'
 import { __dirname } from '../utils.js'
 import customHelpers from '../views/helpers/customHelpers.js'
+import nodemailer from 'nodemailer'
 
 
 export function appConfig(app) {
@@ -35,4 +36,15 @@ export function sessionConfig(app) {
         resave: false,
         saveUninitialized: false
     }))
+}
+
+export function mailerConfig () {
+    return nodemailer.createTransport({
+        service: "gmail",
+        port: 587,
+        auth: {
+            user: process.env.MAILER_EMAIL,
+            pass: process.env.MAILER_PASS
+        }
+    })
 }

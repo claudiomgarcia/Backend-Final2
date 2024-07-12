@@ -1,6 +1,7 @@
 import ProductManager from '../dao/managers/mongomanagers/mongoProductManager.js'
 import CartManager from "../dao/managers/mongomanagers/mongoCartManager.js"
 import { generateLink } from '../utils.js'
+import productModel from '../models/products.model.js'
 
 const productManager = new ProductManager()
 const cartManager = new CartManager()
@@ -72,7 +73,21 @@ export const renderCartPage = async (req, res) => {
         const cid = req.params.cid
         const cart = await cartManager.getCartById(cid)
 
-        res.render('cart', { cart, title: "Detalle del Carrito" })
+        // Verificar stock
+        const productsWithStock = await Promise.all(cart.products.map(async item => {
+            const product = await productModel.findById(item.product._id)
+            return {
+                ...item,
+                inStock: product.stock >= item.quantity
+            }
+        }))
+
+        cart.products = productsWithStock
+
+        res.render('cart', {
+            cart,
+            title: "Detalle del Carrito"
+        })
     } catch (error) {
         res.status(500).json({ error: 'Hubo un error al obtener el carrito.', message: error.message })
     }
@@ -90,6 +105,54 @@ export const renderProfilePage = (req, res) => {
     res.render('profile', {
         user: req.session.user,
         title: "Mi Cuenta"
+    })
+}
+
+export const renderCheckoutPage = async (req, res) => {
+    const cid = req.params.cid
+    const cart = await cartManager.getCartById(cid)
+    const productsData = await productManager.getProducts()
+    const products = productsData.products
+
+    let productsStock = []
+    let productsNoStock = []
+
+    for (let cartItem of cart.products) {
+        const productInCart = cartItem.product
+        const quantityInCart = cartItem.quantity
+
+        const product = products.find(p => p._id.toString() === productInCart._id.toString())
+
+        if (product) {
+            if (quantityInCart <= product.stock) {
+                productsStock.push({
+                    ...product,
+                    quantity: quantityInCart
+                })
+            } else {
+                productsNoStock.push({
+                    ...product,
+                    quantity: quantityInCart
+                })
+            }
+        } else {
+            productsNoStock.push({
+                ...productInCart,
+                quantity: quantityInCart
+            })
+        }
+    }
+
+    console.log(productsStock)
+    console.log(productsNoStock)
+
+    res.render("checkout", {
+        title: "Finalizar compra",
+        productsStock,
+        productsNoStock,
+        cid,
+        cart
+
     })
 }
 

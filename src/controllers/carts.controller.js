@@ -112,3 +112,11 @@ export const clearCart = async (req, res) => {
         res.status(500).json({ error: 'Ocurrió un error al intentar eliminar los productos', message: error.message })
     }
 }
+
+export const checkout = async (req, res) => {
+    try {
+
+    } catch (error) {
+        res.status(500).json({ error: 'Ocurrió un error al finalizar la compra', message: error.message })
+    }
+}
