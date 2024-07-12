@@ -4,7 +4,7 @@ const ticketSchema = new mongoose.Schema({
     code: { type: String },
     purchase_datetime: { type: String },
     amount: { type: Number },
-    purchaser: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+    purchaser: { type: String, required: true },
 })
 
 export default mongoose.model('ticket', ticketSchema)

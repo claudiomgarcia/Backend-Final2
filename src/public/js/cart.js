@@ -41,7 +41,8 @@ function deleteProduct(cid, pid) {
                             icon: 'success',
                             background: '#0F1013',
                             color: '#fff',
-                            confirmButtonColor: '#4258FF',
+                            showConfirmButton: false,
+                            timer: 1000
                         }).then(() => {
                             location.reload()
                         })
@@ -84,7 +85,8 @@ function emptyCart(cid) {
                             icon: 'success',
                             background: '#0F1013',
                             color: '#fff',
-                            confirmButtonColor: '#393F4C'
+                            showConfirmButton: false,
+                            timer: 1000
                         }).then(() => {
                             location.reload()
                         })

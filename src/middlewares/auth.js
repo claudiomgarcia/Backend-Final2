@@ -22,8 +22,8 @@ export const checkRole = (roles) => {
             if (req.session.user.role === "admin") {
                 res.redirect("/realtimeproducts")
             } else {
-                res.send({ message: "No autorizado" });
+                res.send({ message: "No autorizado" })
             }
         }
-    };
-};
+    }
+}

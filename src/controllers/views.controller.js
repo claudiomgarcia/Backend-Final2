@@ -73,7 +73,6 @@ export const renderCartPage = async (req, res) => {
         const cid = req.params.cid
         const cart = await cartManager.getCartById(cid)
 
-        // Verificar stock
         const productsWithStock = await Promise.all(cart.products.map(async item => {
             const product = await productModel.findById(item.product._id)
             return {
@@ -107,55 +106,6 @@ export const renderProfilePage = (req, res) => {
         title: "Mi Cuenta"
     })
 }
-
-export const renderCheckoutPage = async (req, res) => {
-    const cid = req.params.cid
-    const cart = await cartManager.getCartById(cid)
-    const productsData = await productManager.getProducts()
-    const products = productsData.products
-
-    let productsStock = []
-    let productsNoStock = []
-
-    for (let cartItem of cart.products) {
-        const productInCart = cartItem.product
-        const quantityInCart = cartItem.quantity
-
-        const product = products.find(p => p._id.toString() === productInCart._id.toString())
-
-        if (product) {
-            if (quantityInCart <= product.stock) {
-                productsStock.push({
-                    ...product,
-                    quantity: quantityInCart
-                })
-            } else {
-                productsNoStock.push({
-                    ...product,
-                    quantity: quantityInCart
-                })
-            }
-        } else {
-            productsNoStock.push({
-                ...productInCart,
-                quantity: quantityInCart
-            })
-        }
-    }
-
-    console.log(productsStock)
-    console.log(productsNoStock)
-
-    res.render("checkout", {
-        title: "Finalizar compra",
-        productsStock,
-        productsNoStock,
-        cid,
-        cart
-
-    })
-}
-
 export const renderNotFoundPage = (req, res) => {
     res.render('404', { title: "Página no encontrada" })
 }

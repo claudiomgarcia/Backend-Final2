@@ -63,9 +63,11 @@
                                 {{#if (hasProducts cart.products)}}
                                 <button class="button is-danger" id="empty-cart" data-cid="{{cart._id}}">Vaciar Carrito</button>
                                 {{/if}}
+                                {{#if (hasProducts cart.products)}}
                                 <form action="/carts/{{cart._id}}/purchase" method="post" style="display: inline;">
                                     <button class="button is-success" {{#if (hasOutOfStock cart.products)}}disabled{{/if}}>Comprar</button>
                                 </form>
+                                {{/if}}
                             </div>
                             <p>{{#if (hasOutOfStock cart.products)}}Hay productos sin stock en el carrito, por favor eliminelos para continuar con la compra{{/if}}</p>
                         </td>

@@ -17,7 +17,7 @@ export default {
         let total = 0;
         products.forEach(product => {
             total += product.quantity
-        });
+        })
         return total > 0
     },    
     cartTotal: function (products) {
