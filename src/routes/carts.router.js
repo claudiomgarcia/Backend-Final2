@@ -8,7 +8,6 @@ import {
     updateCart,
     updateProductQty,
     clearCart,
-    checkout
 } from '../controllers/carts.controller.js'
 
 const cartsRouter = Router()

@@ -38,7 +38,12 @@ export const login = (req, res, next) => {
                     cart: user.cart,
                     role: user.role
                 }
-                res.json({ redirectUrl: '/products' })
+                if (user.role === "admin") {
+                    res.json({ redirectUrl: '/realtimeproducts' })
+                } else {
+                    res.json({ redirectUrl: '/products' })
+                }
+
             } catch (err) {
                 res.status(500).send('Error al iniciar sesión')
             }
@@ -62,7 +67,7 @@ export const logout = (req, res) => {
 
 export const getCurrentSession = (req, res) => {
     const session = req.session.user
-    
+
     if (!session) {
         return res.status(401).json({ error: 'Sesión no iniciada' })
     }
