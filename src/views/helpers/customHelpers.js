@@ -13,13 +13,13 @@ export default {
         })
         return total
     },
-    hasProducts: function(products) {
+    hasProducts: function (products) {
         let total = 0;
         products.forEach(product => {
             total += product.quantity
         })
         return total > 0
-    },    
+    },
     cartTotal: function (products) {
         let total = 0
         products.forEach(product => {
@@ -27,7 +27,10 @@ export default {
         })
         return total.toFixed(2)
     },
-    hasOutOfStock: function(products) {
+    hasOutOfStock: function (products) {
         return products.some(product => !product.inStock)
+    },
+    isAdmin: function (user) {
+        if (user.role === "admin") return true
     }
 }

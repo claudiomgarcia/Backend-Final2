@@ -1,7 +1,11 @@
 <div class="container pt-5">
     <div class="buttons is-right">
         <b>Bienvenido {{user.first_name}}</b>
+        {{#if (isAdmin user)}}
+        <a href="/realtimeproducts" class="button is-small is-link">Admin Panel</a>
+        {{else}}
         <a href="/chat" class="button is-small is-link">Chat</a>
+        {{/if}}
         <a href="/profile" class="button is-small is-link">Mi cuenta</a>
         <form action="/api/sessions/logout" method="POST">
             <button type="submit" class="button is-small is-dark">Cerrar Sesión</button>
@@ -9,11 +13,14 @@
     </div>
     <h1 class="title pb-3"><a href="/products">Lista de Productos</a></h1>
 
+    {{#if (isAdmin user)}}
+    {{else}}
     <div class="buttons is-right">
         <a href="/carts/{{user.cart}}" class="button is-small is-link"><i class="fas fa-shopping-cart p-1"></i>Carrito
             ({{countProducts cart.products}})</a>
     </div>
-
+    {{/if}}
+    
     <div class="dropdown is-hoverable is-left pb-3">
         <div class="dropdown-trigger">
             <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
