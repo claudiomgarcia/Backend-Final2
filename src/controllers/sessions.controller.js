@@ -1,4 +1,5 @@
 import passport from 'passport'
+import UserDTO from '../dto/user.dto.js'
 
 export const register = (req, res, next) => {
     passport.authenticate('register', (err, user, info) => {
@@ -66,14 +67,11 @@ export const logout = (req, res) => {
 }
 
 export const getCurrentSession = (req, res) => {
-    const session = req.session.user
+    const session = new UserDTO(req.session.user)
 
     if (!session) {
         return res.status(401).json({ error: 'Sesión no iniciada' })
     }
 
-    const { first_name, last_name, age } = session
-    const sessionInfo = { first_name, last_name, age }
-
-    return res.json(sessionInfo)
+    return res.json(session)
 }
