@@ -7,7 +7,9 @@ const usersSchema = new mongoose.Schema({
     age: Number,
     password: { type: String, required: true },
     cart:{ type: mongoose.Schema.Types.ObjectId, ref: 'carts' },
-    role: { type: String, default: 'user' }
+    role: { type: String, default: 'user' },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 })
 
 export default mongoose.model('users', usersSchema)

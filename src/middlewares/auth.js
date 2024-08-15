@@ -22,9 +22,9 @@ export const checkRole = (roles) => {
             if (req.session.user.role === "admin") {
                 res.redirect("/realtimeproducts")
             } else {
-                res.render('error', {
+                res.render('message', {
                     title: "Error",
-                    errorName: "Acceso denegado",
+                    messageTitle: "Acceso denegado",
                     message: "No estás autorizado ver esta sección"
                 })
             }

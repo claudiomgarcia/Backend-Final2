@@ -106,6 +106,13 @@ export const renderProfilePage = (req, res) => {
         title: "Mi Cuenta"
     })
 }
+
+export const renderForgotPassword = (req, res) => {
+    res.render('forgot-password', {
+        user: req.session.user,
+        title: "Restaurar Contraseña"
+    })
+}
 export const renderNotFoundPage = (req, res) => {
     res.render('404', { title: "Página no encontrada" })
 }

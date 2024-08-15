@@ -16,4 +16,5 @@ productsRouter.post('/', isAuthenticated, checkRole(['admin']), addProduct)
 productsRouter.put('/:pid', isAuthenticated, checkRole(['admin']), updateProduct)
 productsRouter.delete('/:pid', isAuthenticated, checkRole(['admin']), deleteProduct)
 
+
 export default productsRouter

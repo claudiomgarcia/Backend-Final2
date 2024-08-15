@@ -5,6 +5,10 @@ import {
     modifyProduct,
     removeProduct
 } from '../services/products.services.js'
+import { generateProducts } from '../utils.js'
+import CustomError from '../services/errors/CustomError.js'
+import { generateProductErrorInfo } from '../services/errors/info.js'
+import { EErrors } from '../services/errors/enum.js'
 
 export const getProducts = async (req, res) => {
     try {
@@ -43,19 +47,35 @@ export const getProductById = async (req, res) => {
     }
 }
 
-export const addProduct = async (req, res) => {
+export const addProduct = async (req, res, next) => {
     try {
         const product = req.body
+        const { title, price } = product
+
+
+        if (!title || !price) {
+            return next(CustomError.createError({
+                name: 'Validation Error',
+                cause: generateProductErrorInfo({ title, price }),
+                message: 'Faltan campos obligatorios.',
+                code: EErrors.INVALID_TYPES_ERROR
+            }))
+        }
+
         const createProductResponse = await createProduct(product)
 
-        if (createProductResponse === false) {
-            return res.status(400).json({ error: `Ya existe un producto con el código "${product.code}".` })
+        if (!createProductResponse) {
+            return next(CustomError.createError({
+                name: 'ProductAlreadyExistsError',
+                message: `Ya existe un producto con el código "${product.code}".`,
+                code: EErrors.INVALID_TYPES_ERROR
+            }))
         }
 
         res.status(201).json({ message: `Se agregó correctamente el producto con el código "${product.code}".` })
 
     } catch (error) {
-        res.status(500).json({ error: 'Hubo un error al agregar el producto.', message: error.message })
+        next(error)
     }
 }
 
@@ -94,5 +114,17 @@ export const deleteProduct = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({ error: 'Hubo un error al intentar eliminar el producto.', message: error.message })
+    }
+}
+
+export const mockingProducts = async (req, res) => {
+    try {
+        const products = Array.from({ length: 100 }, () => generateProducts())
+
+        res.json(products)
+
+    } catch (error) {
+
+        res.status(500).json({ error: 'Ocurrió un error al cargar los productos:', message: error.message })
     }
 }
