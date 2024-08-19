@@ -7,6 +7,7 @@ import { create } from 'express-handlebars'
 import { __dirname } from '../utils.js'
 import customHelpers from '../views/helpers/customHelpers.js'
 import nodemailer from 'nodemailer'
+import swaggerJSDoc from 'swagger-jsdoc'
 
 
 export function appConfig(app) {
@@ -38,7 +39,7 @@ export function sessionConfig(app) {
     }))
 }
 
-export function mailerConfig () {
+export function mailerConfig() {
     return nodemailer.createTransport({
         service: "gmail",
         port: 587,
@@ -47,4 +48,20 @@ export function mailerConfig () {
             pass: process.env.MAILER_PASS
         }
     })
+}
+
+export function swaggerOptions() {
+    const options = {
+        definition: {
+            openapi: "3.0.1",
+            info: {
+                title: "API de Productos",
+                description: "Documentación de la API de productos"
+            },
+        },
+        apis: [`${__dirname}/docs/**/*.yaml`],
+    }
+    console.log(`${__dirname}`)
+
+    return swaggerJSDoc(options)
 }
